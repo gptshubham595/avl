@@ -1,4 +1,4 @@
-package main.java.com.mypackage;
+package main.java.mypackage;
 
 public class AVLTree {
 

@@ -1,11 +1,11 @@
-package test.java.com.mypackage;
+package test.java.mypackage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 import org.junit.Test;
 
-import main.java.com.mypackage.AVLTree;
+import main.java.mypackage.AVLTree;
 
 public class AVLTreeTest {
 
@@ -48,11 +48,12 @@ public class AVLTreeTest {
 		assertNotNull(tree.find(9));
 
 	}
+
 	@Test
 	public void testFind4() {
 		// this array in this order allows to pass in all branches
 		// of the insertion algorithm
-		int[] array = { 9, 19, 29, 39, 49, 24 ,1,2,3,4,5,6,7,8,10,11,12,13,14,15,16,17,18,20,21,22};
+		int[] array = { 9, 19, 29, 39, 49, 24, 1, 2, 3, 4, 5, 6, 7, 8, 10, 11, 12, 13, 14, 15, 16, 17, 18, 20, 21, 22 };
 		AVLTree tree = new AVLTree();
 
 		for (int i = 0; i < array.length; i++) {
@@ -61,25 +62,27 @@ public class AVLTreeTest {
 		assertNotNull(tree.find(22));
 
 	}
+
 	@Test
 	public void testFind5() {
 		// this array in this order allows to pass in all branches
 		// of the insertion algorithm
-		int[] array = { 9, 19, 29, 39, 49, 24 ,23,25,26,27,28,30,31,32,33,34,35,36,37,38};
+		int[] array = { 9, 19, 29, 39, 49, 24, 23, 25, 26, 27, 28, 30, 31, 32, 33, 34, 35, 36, 37, 38 };
 		AVLTree tree = new AVLTree();
 
 		for (int i = 0; i < array.length; i++) {
 			tree.insert(array[i]);
 		}
-		assertEquals(tree.find(90),null);
+		assertEquals(tree.find(90), null);
 
 	}
+
 	@Test
 	public void testFind6() {
 		// this array in this order allows to pass in all branches
 		// of the insertion algorithm
 		AVLTree tree = new AVLTree();
-		assertEquals(tree.find(9050),null);
+		assertEquals(tree.find(9050), null);
 
 	}
 
@@ -108,7 +111,6 @@ public class AVLTreeTest {
 		}
 		assertEquals(tree.getRoot(), tree.find(3001));
 	}
-
 
 	@Test
 	public void testTreeHeight() {
