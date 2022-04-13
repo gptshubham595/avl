@@ -2,7 +2,6 @@ package main.java.com.mypackage;
 
 public class AVLTree {
 
-	// Done
 	public class Node {
 		int key;
 		int height;
@@ -13,45 +12,29 @@ public class AVLTree {
 			this.key = key;
 		}
 
-		public int getKey() {
-			return key;
-		}
-
-		public Node getLeft() {
-			return left;
-		}
-
-		public Node getRight() {
-			return right;
-		}
 	}
 
-	// Done
 	private Node root;
 
-	// Done
 	public Node find(int key) {
 		Node current = root;
 		while (current != null) {
-			if (current.getKey() == key) {
+			if (current.key == key) {
 				break;
 			}
-			current = current.getKey() < key ? current.getRight() : current.getLeft();
+			current = current.key < key ? current.right : current.left;
 		}
 		return current;
 	}
 
-	// DONE
-	public void insert(int key) {
-		root = insert(root, key);
+	public void insert(int key2) {
+		root = insert(root, key2);
 	}
 
-	// DONE
 	public void delete(int key) {
 		root = delete(root, key);
 	}
 
-	// DONE
 	public Node getRoot() {
 		return root;
 	}
@@ -60,35 +43,33 @@ public class AVLTree {
 		return root == null ? -1 : root.height;
 	}
 
-	// Done
 	private Node insert(Node node, int key) {
 		if (node == null) {
 			return new Node(key);
-		} else if (node.getKey() > key) {
-			node.left = insert(node.getLeft(), key);
-		} else if (node.getKey() < key) {
-			node.right = insert(node.getRight(), key);
+		} else if (node.key > key) {
+			node.left = insert(node.left, key);
+		} else if (node.key < key) {
+			node.right = insert(node.right, key);
 		} else {
 			throw new RuntimeException("duplicate Key!");
 		}
 		return rebalance(node);
 	}
 
-	// Done
 	private Node delete(Node node, int key) {
 		if (node == null) {
 			return node;
-		} else if (node.getKey() > key) {
-			node.left = delete(node.getLeft(), key);
-		} else if (node.getKey() < key) {
-			node.right = delete(node.getRight(), key);
+		} else if (node.key > key) {
+			node.left = delete(node.left, key);
+		} else if (node.key < key) {
+			node.right = delete(node.right, key);
 		} else {
-			if (node.getLeft() == null) {
-				node = (node.getLeft() == null) ? node.getRight() : node.getLeft();
+			if (node.left == null) {
+				node = (node.left == null) ? node.right : node.left;
 			} else {
-				Node mostLeftChild = mostLeftChild(node.getRight());
-				node.key = mostLeftChild.getKey();
-				node.right = delete(node.getRight(), node.getKey());
+				Node mostLeftChild = mostLeftChild(node.right);
+				node.key = mostLeftChild.key;
+				node.right = delete(node.right, node.key);
 			}
 		}
 		if (node != null) {
@@ -100,8 +81,8 @@ public class AVLTree {
 	private Node mostLeftChild(Node node) {
 		Node current = node;
 		/* loop down to find the leftmost leaf */
-		while (current.getLeft() != null) {
-			current = current.getLeft();
+		while (current.left != null) {
+			current = current.left;
 		}
 		return current;
 	}
@@ -110,17 +91,17 @@ public class AVLTree {
 		updateHeight(z);
 		int balance = getBalance(z);
 		if (balance > 1) {
-			if (height(z.getRight().getRight()) > height(z.getRight().getLeft())) {
+			if (height(z.right.right) > height(z.right.left)) {
 				z = rotateLeft(z);
 			} else {
-				z.right = rotateRight(z.getRight());
+				z.right = rotateRight(z.right);
 				z = rotateLeft(z);
 			}
 		} else if (balance < -1) {
-			if (height(z.getLeft().getLeft()) > height(z.getLeft().getRight())) {
+			if (height(z.left.left) > height(z.left.right)) {
 				z = rotateRight(z);
 			} else {
-				z.left = rotateLeft(z.getLeft());
+				z.left = rotateLeft(z.left);
 				z = rotateRight(z);
 			}
 		}
@@ -128,8 +109,8 @@ public class AVLTree {
 	}
 
 	private Node rotateRight(Node y) {
-		Node x = y.getLeft();
-		Node z = x.getRight();
+		Node x = y.left;
+		Node z = x.right;
 		x.right = y;
 		y.left = z;
 		updateHeight(y);
@@ -138,8 +119,8 @@ public class AVLTree {
 	}
 
 	private Node rotateLeft(Node y) {
-		Node x = y.getRight();
-		Node z = x.getLeft();
+		Node x = y.right;
+		Node z = x.left;
 		x.left = y;
 		y.right = z;
 		updateHeight(y);
@@ -148,7 +129,7 @@ public class AVLTree {
 	}
 
 	private void updateHeight(Node n) {
-		n.height = 1 + Math.max(height(n.getLeft()), height(n.getRight()));
+		n.height = 1 + Math.max(height(n.left), height(n.right));
 	}
 
 	private int height(Node n) {
@@ -156,6 +137,6 @@ public class AVLTree {
 	}
 
 	public int getBalance(Node n) {
-		return (n == null) ? 0 : height(n.getRight()) - height(n.getLeft());
+		return (n == null) ? 0 : height(n.right) - height(n.left);
 	}
 }
